@@ -1,0 +1,4 @@
+include tests/assets/*.csv
+
+global-include *.py[co]
+global-exclude *.py

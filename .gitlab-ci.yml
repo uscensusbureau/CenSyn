@@ -1,0 +1,144 @@
+image: python:3.7-stretch
+
+variables:
+  WHEELHOUSE_ALL: ".wheelhouse"
+  WHEELHOUSE_LINUX: ".wheelhouse-linux"
+  WHEELHOUSE_MAC: ".wheelhouse-mac"
+  WHEELHOUSE_WINDOWS: ".wheelhouse-windows"
+  CENSYN_VERSION: "v0.8.1"
+
+stages:
+  - build
+  - test
+  - release
+  - package
+  - package_test
+
+build:
+  stage: build
+  script:
+    - pip wheel -f $WHEELHOUSE_ALL -w $WHEELHOUSE_ALL .
+  artifacts:
+    name: "censyn-deps-$CI_JOB_ID"
+    paths:
+      - $WHEELHOUSE_ALL
+    expire_in: 4 h
+  only: &release_branches  # Define the var for branches to include
+    - develop
+    - prototype
+    - /^release\/.*$/
+    - /^hotfix\/.*$/
+    - tags
+
+code_quality:
+  stage: test
+  image: docker:stable
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+        --env SOURCE_CODE="$PWD"
+        --volume "$PWD":/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
+  artifacts:
+    paths: [gl-code-quality-report.json]
+    expire_in: 2 mo
+
+# Code tests.
+test:code:
+  stage: test
+  script:
+    - pip install -r requirements.txt
+    - python -m unittest
+
+release:
+  stage: release
+  dependencies:
+    - build
+  script:
+    - cp $WHEELHOUSE_ALL/censyn* .
+    - mkdir $WHEELHOUSE_LINUX
+    - cp $WHEELHOUSE_ALL/*any.whl $WHEELHOUSE_LINUX
+    - ./download.sh $WHEELHOUSE_LINUX manylinux1_x86_64
+    - mkdir $WHEELHOUSE_MAC
+    - cp $WHEELHOUSE_ALL/*any.whl $WHEELHOUSE_MAC
+    - ./download.sh $WHEELHOUSE_MAC macosx_10_10_x86_64
+    - mkdir $WHEELHOUSE_WINDOWS
+    - cp $WHEELHOUSE_ALL/*any.whl $WHEELHOUSE_WINDOWS
+    - ./download.sh $WHEELHOUSE_WINDOWS win_amd64
+  artifacts:
+    name: "censyn-$CI_JOB_ID"
+    paths:
+      - censyn*.whl
+      - $WHEELHOUSE_LINUX
+      - $WHEELHOUSE_MAC
+      - $WHEELHOUSE_WINDOWS
+      - readme.md
+      - output/
+      - syn_data/
+    expire_in: 2 mo
+  only: *release_branches
+
+# Download all the dependencies for each platform
+package:linux:
+  stage: package
+  dependencies:
+    - build
+  script:
+    - mkdir $WHEELHOUSE_LINUX
+    - cp $WHEELHOUSE_ALL/*any.whl $WHEELHOUSE_LINUX
+    - ./download.sh $WHEELHOUSE_LINUX manylinux1_x86_64
+  artifacts:
+    name: "censyn-download-linux-$CENSYN_VERSION-$CI_JOB_ID"
+    paths:
+      - $WHEELHOUSE_LINUX
+      - readme.md
+    expire_in: 2 mo
+  only: *release_branches
+
+package:mac:
+  stage: package
+  dependencies:
+    - build
+  script:
+    - mkdir $WHEELHOUSE_MAC
+    - cp $WHEELHOUSE_ALL/*any.whl $WHEELHOUSE_MAC/
+    - ./download.sh $WHEELHOUSE_MAC macosx_10_10_x86_64
+  artifacts:
+    name: "censyn-download-mac-$CENSYN_VERSION-$CI_JOB_ID"
+    paths:
+      - $WHEELHOUSE_MAC
+      - readme.md
+    expire_in: 2 mo
+  only: *release_branches
+
+package:windows:
+  stage: package
+  dependencies:
+    - build
+  script:
+    - mkdir $WHEELHOUSE_WINDOWS
+    - cp $WHEELHOUSE_ALL/*any.whl $WHEELHOUSE_WINDOWS/
+    - ./download.sh $WHEELHOUSE_WINDOWS win_amd64
+  artifacts:
+    name: "censyn-download-windows-$CENSYN_VERSION-$CI_JOB_ID"
+    paths:
+      - $WHEELHOUSE_WINDOWS
+      - readme.md
+    expire_in: 2 mo
+  only: *release_branches
+
+# Ensure it's offline installable. Use the linux build because the pipeline is linux based.
+package_test:offline_build:
+  stage: package_test
+  dependencies:
+    - package:linux
+  script:
+    - pip install -I --no-index -f $WHEELHOUSE_LINUX $WHEELHOUSE_LINUX/wheel*
+    - pip install -I --no-index -f $WHEELHOUSE_LINUX $WHEELHOUSE_LINUX/censyn*
+  only: *release_branches

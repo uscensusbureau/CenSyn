@@ -1,0 +1,186 @@
+grammar ChecksPeg
+
+# The Expressions Access Points
+ChecksExpression    <- WS* BooleanValue EndOfInput                                          %checks_expression
+BooleanExpression   <- WS* BooleanValue EndOfInput                                          %boolean_expression
+NumericExpression   <- WS* NumericValue EndOfInput                                          %numeric_expression
+StringExpression    <- WS* StringValue EndOfInput                                           %string_expression
+AnyExpression       <- WS* (BooleanExpression / NumericExpression / StringExpression) EndOfInput
+
+# Boolean value with associated functions
+BooleanValueComma   <- BooleanValue &','
+BooleanValueParen   <- BooleanValue &')'
+BooleanValue        <- OrFactor OrExpr*
+OrExpr              <- ('or' / 'xor') !ANC WS* OrFactor                                     %or_expr
+OrFactor            <- BoolFactor AndExpr*
+AndExpr             <- 'and' !ANC WS* BoolFactor                                            %and_expr
+NotExpr             <- 'not' !ANC WS* BoolFactor                                            %not_expr
+BoolFactor          <- (('(' WS* BooleanValue ')') / BooleanExpr / BooleanFunctions / BoolFactor2) WS*
+BoolFactor2         <- BooleanConst / NoneConst / Variable / NotExpr
+
+# Boolean comparison and functions with numeric or string values
+BooleanExpr         <- NumericCompExpr / StringCompExpr
+NumericCompExpr     <- NumericValue NumericComparison
+NumericComparison   <- ('<=' / '<' / '>=' / '>' / '==' / '=' / '!=') WS* NumericValue       %numeric_comparison
+StringCompExpr      <- StringValue StringComparison
+StringComparison    <- ('<=' / '<' / '>=' / '>' / '==' / '=' / '!=') WS* StringValue        %string_comparison
+
+# Boolean functions with numeric or string values
+BooleanFunctions    <- BooleanFunc1 / BooleanFunc2 / BooleanSeriesFunc
+BooleanFunc1        <- IsNullFunc / NotNullFunc / StartsWithFunc / EndsWithFunc / ContainsFunc
+BooleanFunc2        <- IsInFunc / SortFunc / IfThenElseFunc / IfFunc / GroupByBooleanFunc
+IsNullFunc          <- 'isnull(' WS* AnyValueParen ')'                                      %isnull_func
+NotNullFunc         <- 'notnull(' WS* AnyValueParen ')'                                     %notnull_func
+StartsWithFunc      <- 'startswith(' WS* StringValue ',' WS*  StringConst ')'               %starts_with_func
+EndsWithFunc        <- 'endswith(' WS* StringValue ',' WS* StringConst ')'                  %ends_with_func
+ContainsFunc        <- 'contains(' WS* StringValue ',' WS* StringConst ')'                  %contains_func
+IsInFunc            <- 'isin(' WS* NumericOrStringValueComma ',' WS* ListValue WS* ')'      %is_in_func
+
+# Boolean Series functions
+BooleanSeriesFunc   <- AnyFunc / AllFunc
+AnyFunc             <- 'any(' WS* BooleanValue ')'                                          %any_func
+AllFunc             <- 'all(' WS* BooleanValue ')'                                          %all_func
+
+# Numeric value with associated functions
+NumericValueComma   <- NumericValue &','
+NumericValueParen   <- NumericValue &')'
+NumericValue        <- AddFactor AddExpr*
+AddExpr             <- ('+' / '-') WS* AddFactor                                            %add_expr
+AddFactor           <- NumericFactor MulExpr*
+MulExpr             <- ('*' / '/') WS* NumericFactor                                        %mul_expr
+NegExpr             <- '-' WS* NumericFactor                                                %neg_expr
+NumericFactor       <- (('(' WS* NumericValue ')') / NumericFunctions / NumericFactor2) WS*
+NumericFactor2      <- NumberConst / NanConst / Variable / NegExpr
+
+NumericFunctions    <- NumericFunc / NumericFunc2 / NumericSeriesFunc / IfThenElseFunc / IfFunc / GroupByNumericFunc
+NumericFunc         <- AbsFunc / PowFunc / RoundFunc / LengthFunc / FindFunc / IntFunc / NumFillnaFunc
+NumericFunc2        <- RowIdFunc / MaxListFunc / MinListFunc / SortFunc
+AbsFunc             <- 'abs(' WS* NumericValue ')'                                          %abs_func
+PowFunc             <- 'pow(' WS* NumericValue ',' WS* NumericValue ')'                     %pow_func
+RoundFunc           <- 'round(' WS* NumericValue ',' WS* IntegerConst ')'                   %round_func
+LengthFunc          <- 'length(' WS* StringValue ')'                                        %length_func
+FindFunc            <- 'find(' WS* StringValue ',' WS* StringConst ')'                      %find_func
+IntFunc             <- 'int(' WS* NumericOrStringValueParen ')'                             %int_func
+NumFillnaFunc       <- 'fillna(' WS* NumericValue ',' WS* NumericValue ')'                  %fillna_func
+RowIdFunc           <- 'rowid()'                                                            %rowid_func
+MaxListFunc         <- 'max(' WS* NextNumericValue+ NumericValueParen ')'                   %max_list_func
+MinListFunc         <- 'min(' WS* NextNumericValue+ NumericValueParen ')'                   %min_list_func
+
+# Numeric Series functions
+NumericSeriesFunc   <- MeanFunc / MedianFunc / Stdfunc / Semfunc / NumericSeriesFunc2
+NumericSeriesFunc2  <- MinFunc / MaxFunc / SumFunc / CountFunc / SizeFunc / UniqueFunc
+MeanFunc            <- 'mean(' WS* NumericValue ')'                                         %mean_func
+MedianFunc          <- 'median(' WS* NumericValue ')'                                       %median_func
+Stdfunc             <- 'std(' WS* NumericValue ')'                                          %std_func
+Semfunc             <- 'sem(' WS* NumericValue ')'                                          %sem_func
+MinFunc             <- 'min(' WS* NumericValue ')'                                          %min_func
+MaxFunc             <- 'max(' WS* NumericValue ')'                                          %max_func
+SumFunc             <- 'sum(' WS* NumericValue ')'                                          %sum_func
+CountFunc           <- 'count(' WS* NumericOrStringValueParen ')'                           %count_func
+SizeFunc            <- 'size(' WS* NumericOrStringValueParen ')'                            %size_func
+UniqueFunc          <- 'unique(' WS* NextNumericStringValue+ NumericValueParen ')'          %unique_func
+
+# Next values
+NextNumericValue        <- NumericValueComma ',' WS*                                        %next_value
+NextNumericStringValue  <- (NumericValueComma / StringValueComma) ',' WS*                   %next_value
+
+# GroupBy Boolean functions
+GroupByBooleanFunc  <- GroupByAnyFunc / GroupByAllFunc / GroupByIsIncreasing / GroupByIsDecreasing / GroupByApplyFunc
+GroupByAnyFunc      <- 'any(' WS* GroupBySeriesParam ')'                                    %groupby_any_func
+GroupByAllFunc      <- 'all(' WS* GroupBySeriesParam ')'                                    %groupby_all_func
+GroupByIsIncreasing <- 'is_increasing(' WS* SeriesGroupBy ')'                               %groupby_is_increasing_func
+GroupByIsDecreasing <- 'is_decreasing(' WS* SeriesGroupBy ')'                               %groupby_is_decreasing_func
+
+# GroupBy Numeric functions
+GroupByNumericFunc  <- GroupByNumericFunc2 / GroupByNumericFunc3 / GroupByNumericFunc4 / GroupByNumericFunc5
+GroupByNumericFunc2 <- GroupByCumCountFunc / GroupByCumMaxFunc / GroupByCumMinFunc / GroupByCumProdFunc
+GroupByNumericFunc3 <- GroupByCumSumFunc / GroupByNGroupFunc / GroupByMeanFunc / GroupByMedianFunc
+GroupByNumericFunc4 <- GroupByStdfunc / GroupBySemfunc / GroupByMinFunc / GroupByMaxFunc / GroupByProdFunc
+GroupByNumericFunc5 <- GroupBySumFunc / GroupByCountFunc / GroupBySizeFunc / GroupByApplyFunc
+GroupByCumCountFunc <- 'cumcount(' WS* GroupBySeriesParam ')'                               %groupby_cum_count_func
+GroupByCumMaxFunc   <- 'cummax(' WS* GroupBySeriesParam ')'                                 %groupby_cum_max_func
+GroupByCumMinFunc   <- 'cummin(' WS* GroupBySeriesParam ')'                                 %groupby_cum_min_func
+GroupByCumProdFunc  <- 'cumprod(' WS* GroupBySeriesParam ')'                                %groupby_cum_prod_func
+GroupByCumSumFunc   <- 'cumsum(' WS* GroupBySeriesParam ')'                                 %groupby_cum_sum_func
+GroupByNGroupFunc   <- 'ngroup(' WS* (DataFrameGroupBy / SeriesGroupBy) ')'                 %groupby_num_group_func
+GroupByMeanFunc     <- 'mean(' WS* GroupBySeriesParam ')'                                   %groupby_mean_func
+GroupByMedianFunc   <- 'median(' WS* GroupBySeriesParam ')'                                 %groupby_median_func
+GroupByStdfunc      <- 'std(' WS* GroupBySeriesParam ')'                                    %groupby_std_func
+GroupBySemfunc      <- 'sem(' WS* GroupBySeriesParam ')'                                    %groupby_sem_func
+GroupByMinFunc      <- 'min(' WS* GroupBySeriesParam ')'                                    %groupby_min_func
+GroupByMaxFunc      <- 'max(' WS* GroupBySeriesParam ')'                                    %groupby_max_func
+GroupByProdFunc     <- 'prod(' WS* GroupBySeriesParam* ')'                                  %groupby_prod_func
+GroupBySumFunc      <- 'sum(' WS* GroupBySeriesParam ')'                                    %groupby_sum_func
+GroupByCountFunc    <- 'count(' WS* GroupBySeriesParam ')'                                  %groupby_count_func
+GroupBySizeFunc     <- 'size(' WS* (DataFrameGroupBy / SeriesGroupBy) ')'                   %groupby_size_func
+GroupByApplyFunc    <- 'apply(' WS* DataFrameGroupBy ',' WS* ExpressionParam ')'            %groupby_apply_func
+GroupBySeriesParam  <- (DataFrameGroupBy ',' WS* VariableName WS*  / SeriesGroupBy)
+DataFrameGroupBy    <- 'groupby(' WS* (VariableNameList / AnyValueParen) ')' WS*            %groupby_func
+SeriesGroupBy       <- 'series_groupby(' WS* AnyValueComma ',' WS* 'by=' WS* AnyValueParen ')' WS*  %series_groupby_func
+ExpressionParam     <- ('expr=' / 'boolean_expr=' / 'numeric_expr=' / 'string_expr=') WS* ExpressionConst
+
+# String value
+StringValueComma    <- StringValue &','
+StringValueParen    <- StringValue &')'
+StringValue         <- (('(' WS* StringValue ')') / StringFunctions / StringConst / NoneConst / Variable) WS*
+StringFunctions     <- StringFunc1 / StringFunc2 / StringFunc3
+StringFunc1         <- ConcatFunc / PadLeftFunc / PadRightFunc / StripFunc / LeftStripFunc / RightStripFunc
+StringFunc2         <- ReplaceFunc / SliceFunc / GetFunc / StrFunc / StrFillna / SortFunc
+StringFunc3         <- IfThenElseFunc / IfFunc / GroupByApplyFunc
+ConcatFunc          <- 'concat(' WS* StringValue  ',' WS* StringValue ')'                           %concat_func
+PadLeftFunc         <- 'padleft(' WS* StringValue ',' WS* NumericValue ',' WS* StringValue ')'      %pad_left_func
+PadRightFunc        <- 'padright(' WS* StringValue ',' WS* NumericValue ',' WS* StringValue ')'     %pad_right_func
+StripFunc           <- 'strip(' WS* StringValue (',' WS* StringValue)? ')'                          %strip_func
+LeftStripFunc       <- 'lstrip(' WS* StringValue (',' WS* StringValue)? ')'                         %left_strip_func
+RightStripFunc      <- 'rstrip(' WS* StringValue (',' WS* StringValue)? ')'                         %right_strip_func
+ReplaceFunc         <- 'replace(' WS* StringValue ',' WS*  StringConst ',' WS*  StringConst ')'     %replace_func
+SliceFunc           <- 'slice(' WS* StringValue ',' WS*  IntegerConst (',' WS*  IntegerConst)? ')'  %slice_func
+GetFunc             <- 'get(' WS* StringValue ',' WS*  IntegerConst ')'                             %get_func
+StrFunc             <- 'str(' WS* NumericOrStringValueParen ')'                                     %str_func
+StrFillna           <- 'fillna(' WS* StringValue ',' WS* StringValue ')'                            %fillna_func
+
+# Numeric / String values
+NumericOrStringValueComma   <- NumericValueComma / StringValueComma
+NumericOrStringValueParen   <- NumericValueParen / StringValueParen
+
+# Any value
+AnyValue            <- (BooleanValue / NumericValue / StringValue)
+AnyValueElse        <- (BooleanValue &'else' / NumericValue &'else' / StringValue &'else')
+AnyValueComma       <- (BooleanValue &',' / NumericValueComma / StringValueComma)
+AnyValueParen       <- (BooleanValue &')' / NumericValueParen / StringValueParen)
+
+# List value
+ListValue           <- '[' WS* (AnyValue (',' WS* AnyValue)* )? ']'                                 %list_value
+
+# Other functions
+IfThenElseFunc      <- 'ifthenelse(' WS* BooleanValueComma ',' WS* AnyValueComma ',' WS* AnyValueParen ')' %ifthenelse_func
+IfFunc              <- 'if(' WS* BooleanValue Then AnyValueElse ElseIfFunc* Else AnyValueParen ')'  %if_func
+ElseIfFunc          <- Elseif BooleanValue Then AnyValueElse
+SortFunc            <- 'sort(' WS* AnyValueComma ',' WS* BooleanConst ')'                           %sort_func
+
+# Constants
+Then                <- "then" !ANC  WS*
+Else                <- "else" !ANC  WS*
+Elseif              <- "elseif" !ANC  WS*
+BooleanConst        <- TrueConst / FalseConst WS*
+TrueConst           <- ("true" / "True" / "TRUE") !ANC                                      %true_const
+FalseConst          <- ("false" / "False" / "FALSE") !ANC                                   %false_const
+NoneConst           <- "None" !ANC                                                          %none_const
+NanConst            <- "Nan" !ANC                                                           %nan_const
+NumberConst         <- FloatConst / IntegerConst
+IntegerConst        <- '-'? [0-9]+ WS*                                                      %integer_const
+FloatConst          <- '-'? [0-9]+ '.' [0-9]* WS*                                           %float_const
+ExpressionConst     <- StringConst WS*                                                      %expression_const
+StringConst         <- StringConst1 / StringConst2
+StringConst1        <- "'" [^']* "'" WS*                                                    %string_const
+StringConst2        <- '"' [^"]* '"' WS*                                                    %string_const
+ANC                 <- [a-zA-Z0-9_]
+WS                  <- [ ]
+EndOfInput          <- !.
+
+# Variable
+VariableName        <- VariableConst1 / VariableConst2
+VariableConst1      <- "'" [^']* "'" WS*                                                    %variable_const
+VariableConst2      <- '"' [^"]* '"' WS*                                                    %variable_const
+Variable            <- [a-zA-Z_] ANC*                                                       %variable
+VariableNameList    <- '[' WS* VariableName (',' WS* VariableName)* ']'                     %variable_name_list

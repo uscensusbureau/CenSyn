@@ -1,0 +1,3395 @@
+{
+    "RT": {
+        "feature_desc": "Record Type",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "H denotes housing record and P denotes persons record",
+        "feature_type": "obj",
+        "bins": {
+            "Housing Record": "H"
+        },
+        "model_info": {
+            "model_name": "NoopModel",
+            "model_type": "",
+            "model_params": {}
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SERIALNO": {
+        "feature_desc": "Housing unit/GQ person serial number",
+        "feature_type": "obj",
+        "feature_format": "padleft(SERIALNO, 7, '0')",
+        "field_length": 7.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Use this column to link to the housing file. 7 digit number that contains leading zeros. Does not contain null values.",
+        "bins": {
+            "Unique identifier": "(0, 9999999)"
+        },
+        "model_info": {
+            "model_name": "NoopModel",
+            "model_type": "",
+            "model_params": {}
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SERIALNO",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "ST": {
+        "feature_desc": "State Code based on 2010 Census definitions",
+        "feature_type": "obj",
+        "feature_format": "padleft(ST, 2, '0')",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "State Code based on 2010 Census definitions. 2 digit number with leading zeros.",
+        "bins": {
+            "Alabama/AL": "01",
+            "Alaska/AK": "02",
+            "Arizona/AZ": "04",
+            "Arkansas/AR": "05",
+            "California/CA": "06",
+            "Colorado/CO": "08",
+            "Connecticut/CT": "09",
+            "Delaware/DE": "10",
+            "District of Columbia/DC": "11",
+            "Florida/FL": "12",
+            "Georgia/GA": "13",
+            "Hawaii/HI": "15",
+            "Idaho/ID": "16",
+            "Illinois/IL": "17",
+            "Indianna/IN": "18",
+            "Iowa/IA": "19",
+            "Kansas/KS": "20",
+            "Kentucky/KY": "21",
+            "Louisiana/LA": "22",
+            "Maine/ME": "23",
+            "Maryland/MD": "24",
+            "Massachusetts/MA": "25",
+            "Michigan/MI": "26",
+            "Minnesota/MN": "27",
+            "Mississippi/MS": "28",
+            "Missouri/MO": "29",
+            "Montana/MT": "30",
+            "Nebraska/NE": "31",
+            "Nevada/NV": "32",
+            "New Hampshire/NH": "33",
+            "New Jersey/NJ": "34",
+            "New Mexico/NM": "35",
+            "New York/NY": "36",
+            "North Carolina/NC": "37",
+            "North Dakota/ND": "38",
+            "Ohio/OH": "39",
+            "Oklahoma/OK": "40",
+            "Oregon/OR": "41",
+            "Pennsylvania/PA": "42",
+            "Rhode Island/RI": "44",
+            "South Carolina/SC": "45",
+            "South Dakota/SD": "46",
+            "Tennessee/TN": "47",
+            "Texas/TX": "48",
+            "Utah/UT": "49",
+            "Vermont/VT": "50",
+            "Virginia/VA": "51",
+            "Washington/WA": "53",
+            "West Virginia/WV": "54",
+            "Wisconsin/WI": "55",
+            "Wyoming/WY": "56",
+            "Puerto Rico/PR": "72"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "ST",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "DIVISION": {
+        "feature_desc": "Division code",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Division code based on 2010 Census Definitions",
+        "feature_type": "integer",
+        "bins": {
+            "Puerto Rico": 0,
+            "New England": 1,
+            "Middle Atlantic": 2,
+            "East North Central": 3,
+            "West North Central": 4,
+            "South Atlantic": 5,
+            "East South Central": 6,
+            "West South Central": 7,
+            "Mountain": 8,
+            "Pacific": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "DIVISION",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "PUMA": {
+        "feature_desc": "Public use microdata area code (PUMA) based on 2010 Census definition",
+        "feature_type": "obj",
+        "feature_format": "padleft(PUMA, 5, '0')",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Public use microdata areas (PUMAs) designate areas of 100,000 or more population. Use with ST for unique code. PUMAs are 5 digit numbers with leading zeros.",
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "PUMA",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "REGION": {
+        "feature_desc": "Region code",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Region code based on 2010 Census definitions",
+        "feature_type": "integer",
+        "bins": {
+            "Northeast": 1,
+            "Midwest": 2,
+            "South": 3,
+            "West": 4,
+            "Puerto Rico": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "REGION",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "ADJHSG": {
+        "feature_desc": "Adjustment factor for housing dollar amounts (6 implied decimal plasces)",
+        "field_length": 7.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "The value of ADJHSG inflation-adjusts reported housing costs to 2016 dollars and applies to variables CONP, ELEP, FULP, GASP, GRNTP, INSP, MHP, MRGP, SMOCP, RNTP, SMP, and WATP in the housing record. ADJHSG does not apply to AGS and TAXP because they are categorical variables that should not be inflation-adjusted. ADJHSG does not apply to VALP. The number changes by year and is a 7 digit number where there are 6 implied decimal places. ",
+        "feature_type": "obj",
+        "bins": {
+            "2016 factor (1.000000)": "1000000"
+        },
+        "model_info": {
+            "model_name": "NoopModel",
+            "model_type": "",
+            "model_params": {}
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "ADJHSG",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "ADJINC": {
+        "feature_desc": "Adjustment factor for income and earnings dollar amounts (6 implied decimal places)",
+        "field_length": 7.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "The value of ADJINC inflation-adjusts reported income to 2016 dollars. ADJINC applies to variables FINCP and HINCP in the housing record, and variables INTP, OIP, PAP, PERNP, PINCP, RETP, SEMP, SSIP, SSP, and WAGP in the person record. The number changes by year and is a 7 digit number where there are 6 implied decimal places.",
+        "feature_type": "obj",
+        "bins": {
+            "2016 factor (1.007588)": "1007588",
+            "2019 factor (1.010145)": "1010145"
+        },
+        "model_info": {
+            "model_name": "NoopModel",
+            "model_type": "",
+            "model_params": {}
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "ADJINC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "WGTP": {
+        "feature_desc": "Housing Weight",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Number up to 9999 with 0 in the tenths place",
+        "feature_type": "integer",
+        "bins": {
+            "Group Quarters place holder": 0,
+            "Integer weight of housing unit": "(1, 9999, 500)"
+        },
+        "model_info": {
+            "model_name": "NoopModel",
+            "model_type": "",
+            "model_params": {}
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "WGTP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "NP": {
+        "feature_desc": "Number of person records following this housing record",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Float with 0 in the tenths place",
+        "feature_type": "integer",
+        "bins": {
+            "Vacant unit": 0,
+            "One person record (one person in household or any person in group quarters)": 1,
+            "Number of persons records (number of persons in household)": "(2, 21, 19)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "NP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "TYPE": {
+        "feature_desc": "Type of unit",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": false,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Housing unit": 1,
+            "Institutional group quarters": 2,
+            "Noninstitutional group quarters": 3
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "TYPE",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "ACCESS": {
+        "feature_desc": "Access to the Internet",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, by paying a cell pnone company or Internet service provider": 1,
+            "Yes, without paying a cell phone company or Internet service provider": 2,
+            "No access to the Internet at this house, apartment, or mobile home": 3
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "ACCESS",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "ACR": {
+        "feature_desc": "Lot size",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "House on less than 1 acre": 1,
+            "House on one to less than ten acres": 2,
+            "House on ten or more acres": 3
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "ACR",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "AGS": {
+        "feature_desc": "Sale of Agriculre Products (Yearly sales)",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "No adjustment factor is applied to AGS",
+        "feature_type": "integer",
+        "bins": {
+            "None": 1,
+            "$1 - $999": 2,
+            "$1000 - $2499": 3,
+            "$2500 - $4999": 4,
+            "$5000 - $9999": 5,
+            "$10000+": 6
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "AGS",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "BATH": {
+        "feature_desc": "Bathtub or shower",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "BATH",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "BDSP": {
+        "feature_desc": "Number of bedrooms",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "0 to 99 bedrooms": "(0, 99, 99)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "BDSP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "BLD": {
+        "feature_desc": "Units in structure",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "2 digit number with leading zeros",
+        "feature_type": "integer",
+        "bins": {
+            "Mobile home or trailer": 1,
+            "One-family house detached": 2,
+            "One-family house attached": 3,
+            "2 Apartments": 4,
+            "3-4 Apartments": 5,
+            "5-9 Apartments": 6,
+            "10-19 Apartments": 7,
+            "20-49 Apartments": 8,
+            "50 or more apartments": 9,
+            "Boat, RV, van, etc.": 10
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "BLD",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "BROADBND": {
+        "feature_desc": "Cellular data plan for a smartphone or other mobile device",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "BROADBND",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "COMPOTHX": {
+        "feature_desc": "Other computer equipment",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "COMPOTHX",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "CONP": {
+        "feature_desc": "Condo fee",
+        "field_length": 4.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust CONP to constant dollars",
+        "feature_type": "integer",
+        "bins": {
+            "Not condo": 0,
+            "$1 to $49": "(1, 50)",
+            "$50 to $9999": "(50, 10001, 199)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "CONP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "DIALUP": {
+        "feature_desc": "Dial-up service",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "DIALUP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "ELEP": {
+        "feature_desc": "Electricity (monthly cost)",
+        "field_length": 3.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust ELEP values 3 and over to constant dollars",
+        "feature_type": "integer",
+        "bins": {
+            "Included in rent or in condo fee": 1,
+            "No charge or electricity not used": 2,
+            "$1 to $9": "(3, 10)",
+            "$10 to $999": "(10, 1000, 99)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "ELEP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "FS": {
+        "feature_desc": "Yearly food stamp/Supplemental Nutrition Assistance Program Recipiency",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "FS",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "FULP": {
+        "feature_desc": "Fuel cost (yearly cost for fuels other than gas and electricity)",
+        "field_length": 4.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust FULP values 3 and over to constant dollars",
+        "feature_type": "integer",
+        "bins": {
+            "Included in rent or in condo fee": 1,
+            "No charge or these fuels not used": 2,
+            "$1 to $99": "(3, 100)",
+            "$100 to $9999": "(100, 10000, 99)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "FULP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "GASP": {
+        "feature_desc": "Gas (monthly cost)",
+        "field_length": 3.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust GASP values 4 and over to constant dollars",
+        "feature_type": "integer",
+        "bins": {
+            "Included in rent or in condo fee": 1,
+            "Included in electricity payment": 2,
+            "No charge or gas not used": 3,
+            "$1 to $9": "(4, 10)",
+            "$10 to $999": "(10, 1000, 99)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "GASP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HFL": {
+        "feature_desc": "House heating fuel",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Utility gas": 1,
+            "Bottled, tank, or LP gas": 2,
+            "Electricity": 3,
+            "Fuel oil, kerosene, etc.": 4,
+            "Coal or coke": 5,
+            "Wood": 6,
+            "Solar energy": 7,
+            "Other fuel": 8,
+            "No fuel used": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HFL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HISPEED": {
+        "feature_desc": "Broadband (high speed) Internet service such as cable, fiber optic, or DSL service",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HISPEED",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HOTWAT": {
+        "feature_desc": "Water heater (Puerto Rico only)",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2,
+            "Case is from the United States, HOTWAT not applciable": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HOTWAT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "INSP": {
+        "feature_desc": "Fire/hazard/flood insurance (yearly amount)",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust INSP to constant dollars",
+        "feature_type": "integer",
+        "bins": {
+            "None": 0,
+            "$1 to $9": "(1, 10)",
+            "$10 to $999": "(10, 1000, 99)",
+            "$1000 to $9999": "(1000, 10000, 90)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "INSP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "LAPTOP": {
+        "feature_desc": "Laptop or desktop",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "LAPTOP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MHP": {
+        "feature_desc": "Mobile home costs (yearly amount)",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust MHP to constant dollars",
+        "feature_type": "integer",
+        "bins": {
+            "None": 0,
+            "$1 to $99": "(1, 100)",
+            "$100 to $9,999": "(100, 10000, 99)",
+            "$10,000 to $19,999": "(10000, 20000, 20)",
+            "$20,000 to $99,999": "(20000, 100000, 32)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MHP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MRGI": {
+        "feature_desc": "First mortgage payment includes fire/hazard/flood insurance",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, insurance included in payment": 1,
+            "No, insurance paid separtately or no insurance": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MRGI",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MRGP": {
+        "feature_desc": "First mortgage payment (monthly payment)",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJINC to adjust MRGP to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "$1 to $99,999": "(0, 100000, 1000)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MRGP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MRGT": {
+        "feature_desc": "First mortgage payment includes real estate taxes",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, taxes included in payment": 1,
+            "No, taxes paid separately or taxes not required": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MRGT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MRGX": {
+        "feature_desc": "First mortgage status",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Mortgage, deed of trust, or similar debt": 1,
+            "Contract to purchase": 2,
+            "None": 3
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MRGX",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "OTHSVCEX": {
+        "feature_desc": "Other internet service",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "OTHSVCEX",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "REFR": {
+        "feature_desc": "Refrigerator",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "REFR",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "RMSP": {
+        "feature_desc": "Number of rooms",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Float with 0 in tenths place ",
+        "feature_type": "integer",
+        "bins": {
+            "00..99": "(0, 100, 100)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RMSP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "RNTM": {
+        "feature_desc": "Meals included in rent",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RNTM",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "RNTP": {
+        "feature_desc": "Monthly rent",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJINC to adjust RNTP to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "$1 to $99,999": "(0, 100000, 1000)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RNTP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "RWAT": {
+        "feature_desc": "Hot and cold running water",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2,
+            "Case is from the United States, RWAT not applicable": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RWAT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "RWATPR": {
+        "feature_desc": "Running water",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2,
+            "Case is from the United States, RWATPR not applicable": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RWATPR",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SATELLITE": {
+        "feature_desc": "Satellite Internet service",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SATELLITE",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SINK": {
+        "feature_desc": "Sink with a faucet",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SINK",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SMARTPHONE": {
+        "feature_desc": "Smartphone",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SMARTPHONE",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SMP": {
+        "feature_desc": "Total payment on all second and junior mortgages and home equity loans (monthly amount)",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust SMP to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "$1 to $99999": "(0, 100000, 1000)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SMP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "STOV": {
+        "feature_desc": "Stove or range",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "STOV",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "TABLET": {
+        "feature_desc": "Tablet or other portable wireless computer",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object.",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "TABLET",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "TEL": {
+        "feature_desc": "Telephone service",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes": 1,
+            "No": 2,
+            "Suppressed for select PUMAs": 8
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "TEL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "TEN": {
+        "feature_desc": "Tenure",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Owned with mortgage or loan (includes home equity loans)": 1,
+            "Owned free and clear": 2,
+            "Rented": 3,
+            "Occupied without payment or rent": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "TEN",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "VACS": {
+        "feature_desc": "Vacancy status",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "For rent": 1,
+            "Rented, not occupied": 2,
+            "For sale only": 3,
+            "Sold, not occupied": 4,
+            "For seasonal/recreational/occasional use": 5,
+            "For migrant workers": 6,
+            "Other vacant": 7
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "VACS",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "VALP": {
+        "feature_desc": "Property value",
+        "field_length": 7.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "$1 to $999,999": "(0, 1000000, 100)",
+            "$1,000,000 to $1,999,999": "(1000000, 2000000, 20)",
+            "$2,000,000 to $9,999,999": "(2000000, 10000000, 32)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "VALP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "VEH": {
+        "feature_desc": "Vehicles (1 ton or less) available",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No vehicles": 0,
+            "1 vehicle": 1,
+            "2 vehicles": 2,
+            "3 vehicles": 3,
+            "4 vehicles": 4,
+            "5 vehicles": 5,
+            "6 or more vehicles": 6
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "VEH",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "WATP": {
+        "feature_desc": "Water (yearly cost)",
+        "field_length": 4.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust WATP values 3 and over to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "Included in rent or in condo fee": 1,
+            "No charge": 2,
+            "$1 to $9": "(3, 10)",
+            "$10 to $999": "(10, 1000, 99)",
+            "$1000 to $4999": "(1000, 5000, 40)",
+            "$5000 to $9999": "(5000, 10000, 5)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "WATP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "YBL": {
+        "feature_desc": "When structure first built",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "2 digit number with leading zeros",
+        "feature_type": "integer",
+        "bins": {
+            "1939 or earlier": 1,
+            "1940 to 1949": 2,
+            "1950 to 1959": 3,
+            "1960 to 1969": 4,
+            "1970 to 1979": 5,
+            "1980 to 1989": 6,
+            "1990 to 1999": 7,
+            "2000 to 2004": 8,
+            "2005": 9,
+            "2006": 10,
+            "2007": 11,
+            "2008": 12,
+            "2009": 13,
+            "2010": 14,
+            "2011": 15,
+            "2012": 16,
+            "2013": 17,
+            "2014": 18,
+            "2015": 19,
+            "2016": 20,
+            "2017": 21,
+            "2018": 22,
+            "2019": 23
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "YBL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "FES": {
+        "feature_desc": "Family type and employment status",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Married-couple family: Husband and wife in labor force (LF)": 1,
+            "Married-couple family: Husband in LF, wife not in LF": 2,
+            "Married-couple family: Husband not in LF, wife in LF": 3,
+            "Married-couple family: Neither husband or wife in LF": 4,
+            "Other family: Male householder, no wife present, in LF": 5,
+            "Other family: Male householder, no wife present, not in LF": 6,
+            "Other family: Female householder, no husband present, in LF": 7,
+            "Other family: Female householder, no husband present, not in LF": 8
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "FES",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "FINCP": {
+        "feature_desc": "Family income (past 12 months)",
+        "field_length": 9.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJINC to adjust FINCP to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "No family income": 0,
+            "Loss of $59,999 or more": -59999,
+            "Loss of $30,000 to $59,998": "(-59998, -29999)",
+            "Loss of $20,000 to $29,999": "(-29999, -19999)",
+            "Loss of $10,000 to $19,999": "(-19999, -9999)",
+            "Loss of $6,000 to $9,999": "(-9999, -5999)",
+            "Loss of $5,000 to $5,999": "(-5999, -4999)",
+            "Loss of $4,000 to $4,999": "(-4999, -3999)",
+            "Loss of $3,000 to $3,999": "(-3999, -2999)",
+            "Loss of $2,000 to $2,999": "(-2999, -1999)",
+            "Loss of $1,000 to $1,999": "(-1999, -999)",
+            "Loss of $1 to $999": "(-999, 0)",
+            "$1 or break even": 1,
+            "Total household income $2 to $999": "(2, 1000)",
+            "Total household income $1,000 to $100,000": "(1000, 100000, 99)",
+            "Total household income $100,000 to $1,000,000": "(100000, 1000000, 90)",
+            "Total household income $1,000,000 to $2,000,000": "(1000000, 2000000, 10)",
+            "Total household income $2,000,000 to $10,000,000": "(2000000, 10000000, 8)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "FINCP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "FPARC": {
+        "feature_desc": "Family presence and age of related children",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "With related children under 5 years only": 1,
+            "With related children 5 to 17 years only": 2,
+            "With related children under 5 years and 5 to 17 years": 3,
+            "No related children": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "FPARC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "GRNTP": {
+        "feature_desc": "Gross rent (monthly amount)",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJHSG to adjust GRNTP to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "$1 to $99999": "(0, 100000, 1000)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "GRNTP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "GRPIP": {
+        "feature_desc": "Gross rent as a percentage of household income past 12 months",
+        "field_length": 3.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "1% to 100%": "(1, 101, 100)",
+            "101% or more": 101
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "GRPIP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HHL": {
+        "feature_desc": "Household language",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "English only": 1,
+            "Spanish": 2,
+            "Other Indo-European languages": 3,
+            "Asian and Pacific Island languages": 4,
+            "Other language": 5
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HHL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HHLANP": {
+        "feature_desc": "Detailed household language",
+        "field_length": 4.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "obj",
+        "bins": {
+            "Jamaican Creole English": "1000",
+            "Other English-based Creole languages": "1025",
+            "Haitian": "1055",
+            "Kabuverdianu": "1069",
+            "German": "1110",
+            "Swiss German": "1120",
+            "Pennsylvania German": "1125",
+            "Yiddish": "1130",
+            "Dutch": "1132",
+            "Afrikaans": "1134",
+            "Swedish": "1140",
+            "Danish": "1141",
+            "Norwegian": "1142",
+            "Italian": "1155",
+            "French": "1170",
+            "Cajun French": "1175",
+            "Spanish": "1200",
+            "Portuguese": "1210",
+            "Romanian": "1220",
+            "Irish": "1231",
+            "Greek": "1235",
+            "Albanian": "1242",
+            "Russian": "1250",
+            "Ukrainian": "1260",
+            "Czech": "1262",
+            "Slovak": "1263",
+            "Polish": "1270",
+            "Bulgarian": "1273",
+            "Macedonian": "1274",
+            "Serbocroatian": "1275",
+            "Bosnian": "1276",
+            "Croatian": "1277",
+            "Serbian": "1278",
+            "Lithuanian": "1281",
+            "Latvian": "1283",
+            "Armenian": "1288",
+            "Farsi": "1290",
+            "Dari": "1292",
+            "Kurdish": "1315",
+            "Pashto": "1327",
+            "India N.E.C.": "1340",
+            "Hindi": "1350",
+            "Urdu": "1360",
+            "Bengali": "1380",
+            "Punjabi": "1420",
+            "Konkani": "1435",
+            "Marathi": "1440",
+            "Gujarati": "1450",
+            "Nepali": "1500",
+            "Pakistan N.E.C.": "1525",
+            "Sinhala": "1530",
+            "Other Indo-Iranian languages": "1540",
+            "Other Indo-European languages": "1564",
+            "Finnish": "1565",
+            "Hungarian": "1582",
+            "Turkish": "1675",
+            "Mongolian": "1690",
+            "Telugu": "1730",
+            "Kannada": "1737",
+            "Malayalam": "1750",
+            "Tamil": "1765",
+            "Khmer": "1900",
+            "Vietnamese": "1960",
+            "Chinese": "1970",
+            "Mandarin": "2000",
+            "Min Nan Chinese": "2030",
+            "Cantonese": "2050",
+            "Tibetan": "2100",
+            "Burmese": "2160",
+            "Chin languages": "2270",
+            "Karen languages": "2350",
+            "Thai": "2430",
+            "Lao": "2475",
+            "Iu Mien": "2525",
+            "Hmong": "2535",
+            "Japanese": "2560",
+            "Korean": "2575",
+            "Malay": "2715",
+            "Indonesian": "2770",
+            "Other languages of Asia": "2850",
+            "Filipino": "2910",
+            "Tagalog": "2920",
+            "Cebuano": "2950",
+            "Ilocano": "3150",
+            "Other Philippine languages": "3190",
+            "Chamorro": "3220",
+            "Marshallese": "3270",
+            "Chuukese": "3350",
+            "Samoan": "3420",
+            "Tongan": "3500",
+            "Hawaiian": "3570",
+            "Other Eastern Malayo-Polynesian languages": "3600",
+            "Arabic": "4500",
+            "Hebrew": "4545",
+            "Assyrian Neo-Aramaic": "4560",
+            "Chaldean Neo-Aramaic": "4565",
+            "Amharic": "4590",
+            "Tigrinya": "4640",
+            "Oromo": "4830",
+            "Somali": "4840",
+            "Other Afro-Asiatic languages": "4880",
+            "Nilo-Saharan languages": "4900",
+            "Swahili": "5150",
+            "Ganda": "5345",
+            "Shona": "5525",
+            "Other Bantu languages": "5645",
+            "Manding languages": "5845",
+            "Other Mande languages": "5900",
+            "Fulah": "5940",
+            "Wolof": "5950",
+            "Akan (incl. Twi)": "6120",
+            "Ga": "6205",
+            "Gbe languages": "6230",
+            "Yoruba": "6290",
+            "Edoid languages": "6300",
+            "Igbo": "6370",
+            "Other Niger-Congo languages": "6500",
+            "Other languages of Africa": "6795",
+            "Aleut languages": "6800",
+            "Ojibwa": "6839",
+            "Apache languages": "6930",
+            "Navajo": "6933",
+            "Kiowa-Tanoan languages": "6936",
+            "Dakota languages": "7019",
+            "Muskogean languages": "7032",
+            "Keres":"7039",
+            "Cherokee": "7050",
+            "Zuni": "7059",
+            "Uto-Aztecan languages": "7060",
+            "Other Native North American languages": "7124",
+            "Other Central and South American languages": "7300",
+            "English only household": "9500",
+            "Other and unspecified languages": "9999"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.numerical_encoder.NumericalEncoder",
+            "encoder_param": {
+                "column": "HHLANP",
+                "indicator": true,
+                "inplace": true,
+                "mapping": {
+                    "1000": 1,
+                    "1025": 2,
+                    "1055": 3,
+                    "1069": 4,
+                    "1110": 5,
+                    "1120": 6,
+                    "1125": 7,
+                    "1130": 8,
+                    "1132": 9,
+                    "1134": 10,
+                    "1140": 11,
+                    "1141": 12,
+                    "1142": 13,
+                    "1155": 14,
+                    "1170": 15,
+                    "1175": 16,
+                    "1200": 17,
+                    "1210": 18,
+                    "1220": 19,
+                    "1231": 20,
+                    "1235": 21,
+                    "1242": 22,
+                    "1250": 23,
+                    "1260": 24,
+                    "1262": 25,
+                    "1263": 26,
+                    "1270": 27,
+                    "1273": 28,
+                    "1274": 29,
+                    "1275": 30,
+                    "1276": 31,
+                    "1277": 32,
+                    "1278": 33,
+                    "1281": 34,
+                    "1283": 35,
+                    "1288": 36,
+                    "1290": 37,
+                    "1292": 38,
+                    "1315": 39,
+                    "1327": 40,
+                    "1340": 41,
+                    "1350": 42,
+                    "1360": 43,
+                    "1380": 44,
+                    "1420": 45,
+                    "1435": 46,
+                    "1440": 47,
+                    "1450": 48,
+                    "1500": 49,
+                    "1525": 50,
+                    "1530": 51,
+                    "1540": 52,
+                    "1564": 53,
+                    "1565": 54,
+                    "1582": 55,
+                    "1675": 56,
+                    "1690": 57,
+                    "1730": 58,
+                    "1737": 59,
+                    "1750": 60,
+                    "1765": 61,
+                    "1900": 62,
+                    "1960": 63,
+                    "1970": 64,
+                    "2000": 65,
+                    "2030": 66,
+                    "2050": 67,
+                    "2100": 68,
+                    "2160": 69,
+                    "2270": 70,
+                    "2350": 71,
+                    "2430": 72,
+                    "2475": 73,
+                    "2525": 74,
+                    "2535": 75,
+                    "2560": 76,
+                    "2575": 77,
+                    "2715": 78,
+                    "2770": 79,
+                    "2850": 80,
+                    "2910": 81,
+                    "2920": 82,
+                    "2950": 83,
+                    "3150": 84,
+                    "3190": 85,
+                    "3220": 86,
+                    "3270": 87,
+                    "3350": 88,
+                    "3420": 89,
+                    "3500": 90,
+                    "3570": 91,
+                    "3600": 92,
+                    "4500": 93,
+                    "4545": 94,
+                    "4560": 95,
+                    "4565": 96,
+                    "4590": 97,
+                    "4640": 98,
+                    "4830": 99,
+                    "4840": 100,
+                    "4880": 101,
+                    "4900": 102,
+                    "5150": 103,
+                    "5345": 104,
+                    "5525": 105,
+                    "5645": 106,
+                    "5845": 107,
+                    "5900": 108,
+                    "5940": 109,
+                    "5950": 110,
+                    "6120": 111,
+                    "6205": 112,
+                    "6230": 113,
+                    "6290": 114,
+                    "6300": 115,
+                    "6370": 116,
+                    "6500": 117,
+                    "6795": 118,
+                    "6800": 119,
+                    "6839": 120,
+                    "6930": 121,
+                    "6933": 122,
+                    "6936": 123,
+                    "7019": 124,
+                    "7032": 125,
+                    "7039": 126,
+                    "7050": 127,
+                    "7059": 128,
+                    "7060": 129,
+                    "7124": 130,
+                    "7300": 131,
+                    "9500": 132,
+                    "9999": 133
+                },
+                "alpha": 0.06766917293233082
+            }
+        },
+        "dependencies": []
+    },
+    "HHT": {
+        "feature_desc": "Household/family type",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Married couple household": 1,
+            "Other family household: Male householder, no wife present": 2,
+            "Other family household:Female householder, no husband present": 3,
+            "Nonfamily household: Male householder: living alone": 4,
+            "Nonfamily household: Male householder: not living alone": 5,
+            "Nonfamily household: Female householder: Living alone": 6,
+            "Nonfamily household: Female householder: not living alone": 7
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HHT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HINCP": {
+        "feature_desc": "Household income (past 12 months)",
+        "field_length": 9.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Use ADJINC to adjust HINCP to constant dollars.",
+        "feature_type": "integer",
+        "bins": {
+            "No family income": 0,
+            "Loss of $59,999 or more": -59999,
+            "Loss of $30,000 to $59,998": "(-59998, -29999)",
+            "Loss of $20,000 to $29,999": "(-29999, -19999)",
+            "Loss of $10,000 to $19,999": "(-19999, -9999)",
+            "Loss of $6,000 to $9,999": "(-9999, -5999)",
+            "Loss of $5,000 to $5,999": "(-5999, -4999)",
+            "Loss of $4,000 to $4,999": "(-4999, -3999)",
+            "Loss of $3,000 to $3,999": "(-3999, -2999)",
+            "Loss of $2,000 to $2,999": "(-2999, -1999)",
+            "Loss of $1,000 to $1,999": "(-1999, -999)",
+            "Loss of $1 to $999": "(-999, 0)",
+            "$1 or break even": 1,
+            "Total household income $2 to $999": "(2, 1000)",
+            "Total household income $1,000 to $100,000": "(1000, 100000, 99)",
+            "Total household income $100,000 to $1,000,000": "(100000, 1000000, 90)",
+            "Total household income $1,000,000 to $2,000,000": "(1000000, 2000000, 10)",
+            "Total household income $2,000,000 to $10,000,000": "(2000000, 10000000, 8)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HINCP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HUGCL": {
+        "feature_desc": "Household with grandparent living with grandchildren",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Household without grandparent living with grandchildren": 0,
+            "Household with grandparent living with grandchildren": 1
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HUGCL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HUPAC": {
+        "feature_desc": "Household presence and age of children",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "With children under 6 years only": 1,
+            "With children 6 to 17 years only": 2,
+            "With children under 6 years and 6 to 17 years": 3,
+            "No children": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HUPAC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HUPAOC": {
+        "feature_desc": "Household presence and age of own children",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Presence ofown children under 6 years only": 1,
+            "Presence of own children 6 to 17 years only": 2,
+            "Presence of own children under 6 years and 6 to 17 years": 3,
+            "No own children present": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HUPAOC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "HUPARC": {
+        "feature_desc": "Household presence and age of related children",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Presence of related children under 6 years only": 1,
+            "Presence of related children 6 to 17 years only": 2,
+            "Presence of related children under 6 years and 6 to 17 years": 3,
+            "No related children present": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "HUPARC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "KIT": {
+        "feature_desc": "Complete kitchen facilities",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, has stove or range, refrigerator, and sink with a faucet": 1,
+            "No": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "KIT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "LNGI": {
+        "feature_desc": "Limited English speaking househould",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "At least one person in the household 14 and over speaks English only or speaks English 'very well'": 1,
+            "No one in the household 14 and over speaks English only or speaks English'very well'": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "LNGI",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MULTG": {
+        "feature_desc": "Multigenerational household",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No, not a multigenerational household": 1,
+            "Yes, is a multigenerational household": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MULTG",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "MV": {
+        "feature_desc": "When moved into this house or apartment",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "12 months or less": 1,
+            "13 to 23 months": 2,
+            "2 to 4 years": 3,
+            "5 to 9 years": 4,
+            "10 to 19 years": 5,
+            "20 to 29 years": 6,
+            "30 years or more": 7
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "MV",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "NOC": {
+        "feature_desc": "Number of own children in household (unweighted)",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "No own children present": 0,
+            "Number of own children in household": "(1, 19, 18)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "NOC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "NPF": {
+        "feature_desc": "Number of persons in family (unweighted)",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "Number of persons in family": "(2, 21, 19)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "NPF",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "NPP": {
+        "feature_desc": "Grandparent headed household with no parent present",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Not a grandparent headed household with no parent present": 0,
+            "Grandparent headed household with no parent present": 1
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "NPP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "NR": {
+        "feature_desc": "Presence of nonrelative in household",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "None": 0,
+            "1 or more nonrelatives": 1
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "NR",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "NRC": {
+        "feature_desc": "Number of related children in household (unweighted)",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "No related children": 0,
+            "Number of related children in household": "(1, 19, 18)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "NRC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "OCPIP": {
+        "feature_desc": "Selected monthly owner costs as a percentage of household income during the past 12 months",
+        "field_length": 3.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "1% to 100%": "(1, 101, 100)",
+            "101% or more": 101
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "OCPIP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "PARTNER": {
+        "feature_desc": "Unmarried partner household",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No unmarried partner in household": 0,
+            "Male householder, male partner": 1,
+            "Male householder, female partner": 2,
+            "Female householder, female partner": 3,
+            "Female householder, male partner": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "PARTNER",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "PLM": {
+        "feature_desc": "Complete plumbing facilities",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, has hot and cold running water, and a bathtub or shower": 1,
+            "No": 2,
+            "Case is from Puerto Rico, PLM recode not applicable": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "PLM",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "PLMPRP": {
+        "feature_desc": "Complete plumbing facilities for Puerto Rico",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, has running water, and a bathtub or shower": 1,
+            "No": 2,
+            "Case is from United States, PLMPRP recode not applicable": 9
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "PLMPRP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "PSF": {
+        "feature_desc": "Presence of subfamilies in household",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No subfamilies": 0,
+            "1 or more subfamilies": 1
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "PSF",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "R18": {
+        "feature_desc": "Presence of persons under 18 years in household (unweighted)",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No person under 18 in household": 0,
+            "1 or more persons under 18 in household": 1
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "R18",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "R60": {
+        "feature_desc": "Presence of persons 60 years and over in household (unweighted)",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No persons 60 or older": 0,
+            "1 person 60 and over": 1,
+            "2 or more persons 60 and over": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "R60",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "R65": {
+        "feature_desc": "Presence of persons 65 years and over in household (unweighted)",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No persons 65 or older": 0,
+            "1 person 65 and over": 1,
+            "2 or more persons 65 and over": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "R65",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "RESMODE": {
+        "feature_desc": "Response mode",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Mail": 1,
+            "Cati/CAPI": 2,
+            "Internet": 3
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "RESMODE",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SMOCP": {
+        "feature_desc": "Selected monthly owner costs",
+        "field_length": 5.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "",
+        "feature_type": "integer",
+        "bins": {
+            "None": 0,
+            "$1 to $99": "(1, 100)",
+            "$100 to $9999": "(100, 10000, 99)",
+            "$10000 to $99999": "(10000, 100000, 9)"
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SMOCP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SMX": {
+        "feature_desc": "Second or junior mortage or home equity loan status",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Yes, a second mortgage": 1,
+            "Yes, a home equity loan": 2,
+            "No": 3,
+            "Both second mortgage and home equity loan": 4
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SMX",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SRNT": {
+        "feature_desc": "Specified rental unit",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "A single-family home on 10 or more acres": 0,
+            "A single-family home on less than 10 acres or any other type of building, including mobile homes, with no regard to acreage": 1
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SRNT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SSMC": {
+        "feature_desc": "Same-sex married couple households",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "Households without a same-sex married couple": 0,
+            "Same-sex married-couple household where not all relevant data shown as reported": 1,
+            "All other same-sex married-couple households": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SSMC",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "SVAL": {
+        "feature_desc": "Specified owner unit",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "A single-family home on 10 or more acres or any other type of building, including mobile homes, with no regard to acreage": 0,
+            "A single-family home on less than 10 acres": 1,
+            "All other same-sex married-couple households": 2
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "SVAL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "TAXP": {
+        "feature_desc": "Property taxes (yearly amount)",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "No adjustment factor is applied to TAXP.",
+        "feature_type": "integer",
+        "bins": {
+            "None": 1,
+            "$1 - $49": 2,
+            "$50 - $99": 3,
+            "$100 - $149": 4,
+            "$150 - $199": 5,
+            "$200 - $249": 6,
+            "$250 - $299": 7,
+            "$300 - $349": 8,
+            "$350 - $399": 9,
+            "$400 - $449": 10,
+            "$450 - $499": 11,
+            "$500 - $549": 12,
+            "$550 - $599": 13,
+            "$600 - $649": 14,
+            "$650 - $699": 15,
+            "$700 - $749": 16,
+            "$750 - $799": 17,
+            "$800 - $849": 18,
+            "$850 - $899": 19,
+            "$900 - $949": 20,
+            "$950 - $999": 21,
+            "$1,000 - $1,099": 22,
+            "$1,100 - $1,199": 23,
+            "$1,200 - $1,299": 24,
+            "$1,300 - $1,399": 25,
+            "$1,400 - $1,499": 26,
+            "$1,500 - $1,599": 27,
+            "$1,600 - $1,699": 28,
+            "$1,700 - $1,799": 29,
+            "$1,800 - $1,899": 30,
+            "$1,900 - $1,999": 31,
+            "$2,000 - $2,099": 32,
+            "$2,100 - $2,199": 33,
+            "$2,200 - $2,299": 34,
+            "$2,300 - $2,399": 35,
+            "$2,400 - $2,499": 36,
+            "$2,500 - $2,599": 37,
+            "$2,600 - $2,699": 38,
+            "$2,700 - $2,799": 39,
+            "$2,800 - $2,899": 40,
+            "$2,900 - $2,999": 41,
+            "$3,000 - $3,099": 42,
+            "$3,100 - $3,199": 43,
+            "$3,200 - $3,299": 44,
+            "$3,300 - $3,399": 45,
+            "$3,400 - $3,499": 46,
+            "$3,500 - $3,599": 47,
+            "$3,600 - $3,699": 48,
+            "$3,700 - $3,799": 49,
+            "$3,800 - $3,999": 50,
+            "$3,900 - $3,999": 51,
+            "$4,000 - $4,099": 52,
+            "$4,100 - $4,199": 53,
+            "$4,200 - $4,299": 54,
+            "$4,300 - $4,399": 55,
+            "$4,400 - $4,499": 56,
+            "$4,500 - $4,599": 57,
+            "$4,600 - $4,699": 58,
+            "$4,700 - $4,799": 59,
+            "$,4800 - $4,899": 60,
+            "$,4900 - $4,999": 61,
+            "$,5000 - $5,499": 62,
+            "$5,500 - $5,999": 63,
+            "$6,000 - $6,999": 64,
+            "$7,000 - $7,999": 65,
+            "$8,000 - $8,999": 66,
+            "$9,000 - $9,999": 67,
+            "$10,000 +": 68
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "TAXP",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "WIF": {
+        "feature_desc": "Workers in family during the past 12 months",
+        "field_length": 1.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "Integer stored as object",
+        "feature_type": "integer",
+        "bins": {
+            "No workers": 0,
+            "1 worker": 1,
+            "2 workers": 2,
+            "3 or more workers in family": 3
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "WIF",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "WKEXREL": {
+        "feature_desc": "Work experience of householder and spouse",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "2 digit code with leading zeros",
+        "feature_type": "integer",
+        "bins": {
+            "Householder and spouse worked FT": 1,
+            "Householder worked FT; spouse worked < FT": 2,
+            "Householder worked FT; spouse did not work": 3,
+            "Householder worked < FT; spouse worked FT": 4,
+            "Householder worked < FT; spouse worked < FT": 5,
+            "Householder worked < FT; spouse did not work": 6,
+            "Householder did not work; spouse worked FT": 7,
+            "Householder did not work; spouse worked < FT": 8,
+            "Householder did not work; spouse did not work": 9,
+            "Male householder worked FT; no spouse present": 10,
+            "Male householder worked < FT; no spouse present": 11,
+            "Male householder did not work, no spouse present": 12,
+            "Female householder worked FT; no spouse present": 13,
+            "Female householder worked < FT; no spouse present": 14,
+            "Female householder did not work; no spouse present": 15
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "WKEXREL",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    },
+    "WORKSTAT": {
+        "feature_desc": "Work status of householder or spouse in family households",
+        "field_length": 2.0,
+        "field_density": "sparse",
+        "contains_null": true,
+        "feature_notes": "2 digit code with leading zeros",
+        "feature_type": "integer",
+        "bins": {
+            "Husband and wife both in labor force, both employed or in Armed Forces": 1,
+            "Husband and wife both in labor force, husband employed or in Armed Forces, wife unemployed": 2,
+            "Husband in labor force and wife not in labor force, husband employed or in Armed Forces": 3,
+            "Husband and wife both in labor force, husband unemployed, wife employed or in Armed Forces": 4,
+            "Husband and wife both in labor force, husband unemployed, wife unemployed": 5,
+            "Husband in labor force, husband unempolyed, wife not in labor force": 6,
+            "Husband not in labor force, wife in labor force, wife employed or in Armed Forces": 7,
+            "Husband not in labor force, wife in labor force, wife unemployed": 8,
+            "Neither husband nor wife in labor force": 9,
+            "Male householder with no wife present, householder in labor force, employed or in Armed Forces": 10,
+            "Male householder with no wife present, householder in labor force and unemployed": 11,
+            "Male householder with no wife present, householder not in labor force": 12,
+            "Female householder with no husband present, householder in labor force, employed or in Armed Forces": 13,
+            "Female householder with no husband present, householder in labor force and unemployed": 14,
+            "Female householder with no husband present, householder not in labor force": 15
+        },
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_type": "",
+            "model_params": {
+                "max_depth": 12,
+                "criterion": "entropy",
+                "min_impurity_decrease": 1e-05
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param": {
+                "column": "WORKSTAT",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": []
+    }
+}

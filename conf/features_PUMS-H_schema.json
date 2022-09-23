@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "censyn_feature_definition_0.1",
+    "type": "object",
+    "patternProperties": {
+        ".*?": {
+            "properties": {
+                "feature_desc": { "type": "string" },
+                "feature_type": {
+                    "type": "string",
+                    "enum": [
+                        "obj",
+                        "integer",
+                        "floating_point"
+                    ]
+                },
+                "field_length": {
+                    "type": "number" ,
+                    "multipleOf": 1,
+                    "minimum": 1
+                },
+                "contains_null": { "type": "boolean" },
+                "field_density": {
+                    "type": "string",
+                    "enum": [
+                        "dense",
+                        "sparse"
+                    ]
+                },
+                "bins": {
+                    "type": "object"
+                }
+            },
+            "constraints": {
+                "range": {
+                    "type": "object",
+                    "patternProperties": {
+                        "*.^$": {
+                            "type": [
+                                "number",
+                                "array",
+                                "string"
+                            ],
+                            "items": {
+                                "type": [
+                                    "number",
+                                    "null"
+                                ],
+                                "minItems": 2,
+                                "maxItems": 2
+                            }
+                        }
+                    },
+                    "minItems": 1
+                }
+            },
+            "oneOf": [{
+                "required": [
+                    "feature_desc",
+                    "feature_type",
+                    "field_length",
+                    "contains_null",
+                    "field_density"
+                ]
+            },
+            {
+                "required": [
+                    "feature_desc",
+                    "feature_type",
+                    "field_length",
+                    "contains_null",
+                    "field_density",
+                    "constraints"
+                ]
+            }]
+        }
+    }
+}

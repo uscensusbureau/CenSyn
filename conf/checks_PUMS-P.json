@@ -1,0 +1,60 @@
+{
+     "consistency_checks": {
+          "MLPK_AGE": {
+              "description" : "Too young for military service November 1941 or earlier",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPK == 1 and AGEP < 91)"
+              }
+          },
+          "MLPJ_AGE": {
+              "description" : "Too young for military service World War II",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPJ == 1 and AGEP < 86)"
+              }
+          },
+          "MLPI_AGE": {
+              "description" : "Too young for military service January 1947 - June 1950",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPI == 1 and AGEP < 82)"
+              }
+          },
+          "MLPH_AGE": {
+              "description" : "Too young for military service Korean War",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPH == 1 and AGEP < 77)"
+              }
+          },
+          "MLPFG_AGE": {
+              "description" : "Too young for military service February 1955 - July 1964",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPFG == 1 and AGEP < 68)"
+              }
+          },
+          "MLPE_AGE": {
+              "description" : "Too young for military service Vietnam era",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPE == 1 and AGEP < 57)"
+              }
+          },
+          "MLPCD_AGE": {
+              "description" : "Too young for military service May 1975 - July 1990",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPCD == 1 and AGEP < 42)"
+              }
+          },
+          "MLPB_AGE": {
+              "description" : "Too young for military service August 1990 - August 2001",
+              "class": "ConsistencyCheck",
+              "attributes": {
+                  "expression": "not(MLPB == 1 and AGEP < 31)"
+              }
+          }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "experiments": [
+        {
+            "features": {
+                "file_source": "FeatureJsonFileSource",
+                "file_name": "test.json"
+            },
+            "report": {
+                "report_type": "ConsoleReport",
+                "report_attributes": {}
+            },
+            "pickled_model": {
+                "experiment_name": "test_1_1",
+                "file_name": "pickled_models.pkl"
+            }
+        },
+        {
+            "features": {
+                "file_source": "FeatureJsonFileSource",
+                "file_name": "test.json"
+            },
+            "report": {
+                "report_type": "ConsoleReport",
+                "report_attributes": {}
+            }
+        }
+    ]
+}

@@ -1,0 +1,105 @@
+{
+    "NAME": {
+        "feature_desc": "First Name",
+        "feature_type": "obj",
+        "field_length": 1,
+        "contains_null": false,
+        "field_density": "sparse",
+        "binning_strategy": {
+            "strategy": "one_to_one",
+            "bins": {
+                "1": "Bob",
+                "2": "Alice",
+                "3": "Joe",
+                "4": "Chris"
+            }
+        },
+        "feature_notes": "P denotes person record and H denotes housing record",
+        "model_info": {
+            "model_name": "DecisionTreeModel",
+            "model_params": {
+                "max_depth" : 10,
+                "criterion": "entropy",
+                "min_impurity_decrease" : 1e-5
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.numerical_encoder.NumericalEncoder",
+            "encoder_param" : {
+                "column": "NAME",
+                "mapping": {
+                    "Bob": 1,
+                    "Alice": 2,
+                    "Joe": 3,
+                    "Chris": 4
+                },
+                "alpha": 0.5,
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": ["ICB"]
+    },
+    "AGE": {
+        "feature_desc": "Age",
+        "feature_type": "integer",
+        "field_length": 2,
+        "contains_null": false,
+        "field_density": "sparse",
+        "binning_strategy": {
+            "strategy": "one_to_one",
+            "bins": {
+                "1": "28",
+                "2": "43",
+                "3": "12",
+                "4": "7"
+            }
+        },
+        "feature_notes": "",
+        "model_info": {
+            "model_name": "DecisionTreeRegressor",
+            "model_params": {
+                "max_depth" : 10,
+                "criterion": "mse",
+                "min_impurity_decrease" : 1e-5
+            }
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param" : {
+                "column": "AGE",
+                "indicator": true,
+                "inplace": true
+            }
+        },
+        "dependencies": ["ICB", "NAME"]
+    },
+    "ICB": {
+        "feature_desc": "Income Bracket",
+        "feature_type": "integer",
+        "field_length": 2,
+        "contains_null": false,
+        "field_density": "sparse",
+        "binning_strategy": {
+            "strategy": "one_to_one",
+            "bins": {
+                "0": "0",
+                "1": "1",
+                "2": "2",
+                "3": "3"
+            }
+        },
+        "feature_notes": "",
+        "model_info": {
+            "model_name": "NoopModel"
+        },
+        "encoder": {
+            "encoder_type": "encoder.encoder.IdentityEncoder",
+            "encoder_param" : {
+                "column": "ICB",
+                "indicator": true,
+                "inplace": true
+            }
+        }
+    }
+}
