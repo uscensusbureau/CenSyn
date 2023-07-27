@@ -431,9 +431,9 @@ class Experiment:
                                          f"{external_synth_df.columns}")
                     target_s = external_synth_df[model.target_feature.feature_name]
                     model.train(predictor_df=None, target_series=target_s, weight=None)
-            syn_df = pd.DataFrame(data=external_synth_df, columns=set(self.bootstrap_features + self.ignore_features))
+            syn_df = pd.DataFrame(data=external_synth_df, columns=list(set(self.bootstrap_features + self.ignore_features)))
         else:
-            syn_df = pd.DataFrame(data=self.data_unencoded, columns=set(self.bootstrap_features + self.ignore_features))
+            syn_df = pd.DataFrame(data=self.data_unencoded, columns=list(set(self.bootstrap_features + self.ignore_features)))
         encode_syn_df = syn_df.copy()
         features: List = [model.target_feature for model in self._experiment_models.values()
                           if model.target_feature.feature_name in encode_syn_df.columns]
