@@ -1,28 +1,3 @@
-{
-    "experiments": [
-        {
-            "features": {
-                "file_source": "FeatureJsonFileSource",
-                "file_name": "test.json"
-            },
-            "report": {
-                "report_type": "ConsoleReport",
-                "report_attributes": {}
-            },
-            "pickled_model": {
-                "experiment_name": "test_1_1",
-                "file_name": "pickled_models.pkl"
-            }
-        },
-        {
-            "features": {
-                "file_source": "FeatureJsonFileSource",
-                "file_name": "test.json"
-            },
-            "report": {
-                "report_type": "ConsoleReport",
-                "report_attributes": {}
-            }
-        }
-    ]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:1f59b3fc78b7dee20086e72e0e603e6ab11501b063ff982147680e165d5b9361
+size 742
