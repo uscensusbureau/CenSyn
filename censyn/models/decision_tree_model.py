@@ -213,6 +213,7 @@ class DecisionTreeBaseModel(Model, ABC):
                           f"predictor_df {'None' if predictor_df is None else predictor_df.shape}, "
                           f"target_series {target_series.shape}, weight {'None' if weight is None else weight.shape}.")
         count = 0
+        
         while True:
             try:
                 logging.debug(f'Start tree fit with params {tree.get_params()}')
@@ -230,7 +231,7 @@ class DecisionTreeBaseModel(Model, ABC):
                 if new_params['max_depth']:
                     new_params['max_depth'] = new_params['max_depth'] - 1
                 if new_params['max_leaf_nodes']:
-                    new_params['max_leaf_nodes'] = int(new_params['max_leaf_nodes'] * 0.8)
+                    new_params['max_leaf_nodes'] = int(new_params['max_leaf_nodes'] * 0.5)
                 new_params['min_samples_leaf'] = new_params['min_samples_leaf'] * 2
                 new_params['min_samples_split'] = new_params['min_samples_split'] * 2
                 tree.set_params(**new_params)

@@ -121,7 +121,7 @@ class Model(ABC):
             encode = IdentityEncoder(column=self._feature_name, indicator=True, inplace=True)
             e_df = pd.DataFrame(target_series)
             encode.encode(e_df)
-            self._indicator_model = md.DecisionTreeModel(target_feature=self.target_feature, is_indicator=True)
+            self._indicator_model = md.DecisionTreeModel(target_feature=self.target_feature, sklearn_params = {'max_depth': 10, 'criterion': 'gini', 'min_impurity_decrease': 1e-5}, is_indicator=True)
             self._indicator_model._feature_name = f"{self._feature_name}_indicator"
             self._indicator_model.train(predictor_df=predictor_df, target_series=e_df[indicator_name],
                                         weight=weight, indicator=True)
